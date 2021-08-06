@@ -24,7 +24,10 @@ const getAllData = async (addressDetails) => {
       "Cannot find any meter information for this address"
     );
   }
-  const meterInfo = await getMeterInfo(primaryMeters);
+  const meterInfo = await getMeterInfo({
+    ...primaryMeters,
+    postcode: addressDetails.postcode
+  });
   const isEconomy7 = Boolean(meterInfo.electricity?.isEconomy7);
   const offPeakElectricityMeterTimings = isEconomy7 && primaryMeters.mpan
     ? await getOffPeakElectricityMeterTimings(primaryMeters.mpan)
